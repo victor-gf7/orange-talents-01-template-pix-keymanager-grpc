@@ -1,15 +1,14 @@
 package br.com.zup.server
 
+import br.com.zup.*
 import br.com.zup.AccountType.UNKNOWN_ACCOUNT
-import br.com.zup.KeyManagerGRPCServiceGrpc
-import br.com.zup.RegisterKeyRequest
-import br.com.zup.RegisterKeyResponse
 import br.com.zup.KeyType.UNKNOWN_KEY
 import br.com.zup.key.AccountType
 import br.com.zup.key.KeyType
 import br.com.zup.key.PixKey
 import br.com.zup.key.register.NewPixKey
 import br.com.zup.key.register.NewPixKeyService
+import br.com.zup.key.remove.RemoveKeyService
 import br.com.zup.validation.handler.ErrorHandler
 import io.grpc.stub.StreamObserver
 import org.slf4j.Logger
@@ -19,7 +18,7 @@ import javax.inject.Singleton
 
 @ErrorHandler
 @Singleton
-class KeyManagerGrpcServer(@Inject private val service: NewPixKeyService) : KeyManagerGRPCServiceGrpc.KeyManagerGRPCServiceImplBase() {
+class KeyManagerGrpcServer(@Inject private val service: NewPixKeyService,  @Inject private val removeService: RemoveKeyService) : KeyManagerGRPCServiceGrpc.KeyManagerGRPCServiceImplBase() {
 
     private val logger: Logger = LoggerFactory.getLogger(this::class.java)
 
@@ -36,6 +35,21 @@ class KeyManagerGrpcServer(@Inject private val service: NewPixKeyService) : KeyM
                 .build()
         )
         responseObserver.onCompleted()
+    }
+
+    override fun removeKey(request: RemoveKeyRequest, responseObserver: StreamObserver<RemoveKeyResponse>) {
+        logger.info("removing key...")
+
+        removeService.remove(clientId = request.clientId, pixId = request.pixId)
+
+        responseObserver.onNext(
+            RemoveKeyResponse.newBuilder()
+                .setClientId(request.clientId)
+                .setPixId(request.pixId)
+                .build()
+        )
+        responseObserver.onCompleted()
+
     }
 }
 

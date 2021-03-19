@@ -9,6 +9,7 @@ package br.com.zup;
 
 service KeyManagerGRPCService {
   rpc registerKey (RegisterKeyRequest) returns (RegisterKeyResponse) {}
+  rpc removeKey (RemoveKeyRequest) returns (RemoveKeyResponse) {}
 }
 
 enum KeyType{
@@ -32,7 +33,17 @@ message RegisterKeyRequest{
   AccountType accountType = 4;
 }
 
+message RemoveKeyRequest{
+  string pixId = 1;
+  string clientId = 2;
+}
+
 message RegisterKeyResponse{
+  string clientId = 1;
+  string pixId = 2;
+}
+
+message RemoveKeyResponse{
   string clientId = 1;
   string pixId = 2;
 }

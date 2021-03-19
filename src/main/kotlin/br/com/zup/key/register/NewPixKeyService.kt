@@ -29,6 +29,5 @@ class NewPixKeyService(
         repository.save(pixKey)
 
         return pixKey
-    //val key:PixKey = newPixKey.toModel()
     }
 }
