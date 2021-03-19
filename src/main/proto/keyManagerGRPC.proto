@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "br.com.zup";
+option java_outer_classname = "KeyManagerGRPC";
+option objc_class_prefix = "HLW";
+
+package br.com.zup;
+
+service KeyManagerGRPCService {
+  rpc registerKey (RegisterKeyRequest) returns (RegisterKeyResponse) {}
+}
+
+enum KeyType{
+  UNKNOWN_KEY = 0;
+  CPF = 1;
+  PHONE =2;
+  EMAIL = 3;
+  RANDOM_KEY = 4;
+}
+
+enum AccountType{
+  UNKNOWN_ACCOUNT = 0;
+  CONTA_CORRENTE = 1;
+  CONTA_POUPANCA = 2;
+}
+
+message RegisterKeyRequest{
+  string idClient = 1;
+  KeyType keyType = 2;
+  string keyValue = 3;
+  AccountType accountType = 4;
+}
+
+message RegisterKeyResponse{
+  string clientId = 1;
+  string pixId = 2;
+}
