@@ -43,6 +43,7 @@ dependencies {
     implementation("io.micronaut:micronaut-http-client")
     implementation("io.micronaut.sql:micronaut-jdbc-hikari")
     implementation('org.hibernate.validator:hibernate-validator:6.1.6.Final')
+    implementation("io.micronaut.xml:micronaut-jackson-xml")
 
 
     //JPA

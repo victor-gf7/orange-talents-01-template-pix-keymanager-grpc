@@ -18,7 +18,10 @@ import javax.inject.Singleton
 
 @ErrorHandler
 @Singleton
-class KeyManagerGrpcServer(@Inject private val service: NewPixKeyService,  @Inject private val removeService: RemoveKeyService) : KeyManagerGRPCServiceGrpc.KeyManagerGRPCServiceImplBase() {
+class KeyManagerGrpcServer(
+    @Inject private val service: NewPixKeyService,
+    @Inject private val removeService: RemoveKeyService,
+) : KeyManagerGRPCServiceGrpc.KeyManagerGRPCServiceImplBase() {
 
     private val logger: Logger = LoggerFactory.getLogger(this::class.java)
 

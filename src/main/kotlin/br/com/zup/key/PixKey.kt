@@ -21,7 +21,7 @@ class PixKey(
 
     @field:Size(max = 77)
     @Column(unique = true, nullable = false)
-    val keyValue: String,
+    var keyValue: String,
 
     @field:NotNull
     @Enumerated(EnumType.STRING)
@@ -38,4 +38,8 @@ class PixKey(
 
     @Column(nullable = false)
     val createdIn: LocalDateTime = LocalDateTime.now()
+
+    fun update(key: String) {
+        this.keyValue = key
+    }
 }
