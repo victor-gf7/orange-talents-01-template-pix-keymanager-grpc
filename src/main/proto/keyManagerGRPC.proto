@@ -3,13 +3,21 @@ syntax = "proto3";
 option java_multiple_files = true;
 option java_package = "br.com.zup";
 option java_outer_classname = "KeyManagerGRPC";
-option objc_class_prefix = "HLW";
 
 package br.com.zup;
 
-service KeyManagerGRPCService {
+import "google/protobuf/timestamp.proto";
+
+service KeyManagerRegisterGRPCService {
   rpc registerKey (RegisterKeyRequest) returns (RegisterKeyResponse) {}
+}
+
+service KeyManagerRemoveGRPCService {
   rpc removeKey (RemoveKeyRequest) returns (RemoveKeyResponse) {}
+}
+
+service KeyManagerDetailGRPCService {
+  rpc detailKey (KeyDetailRequest) returns (KeyDetailResponse) {}
 }
 
 enum KeyType{
@@ -25,6 +33,40 @@ enum AccountType{
   CONTA_CORRENTE = 1;
   CONTA_POUPANCA = 2;
 }
+
+message KeyDetailRequest{
+  message PixIdFilter {
+    string clientId = 1;
+    string pixId = 2;
+  }
+  oneof filter{
+      PixIdFilter pixId = 1;
+      string key = 2;
+  }
+}
+
+message KeyDetailResponse{
+  message PixKey{
+    message AccountInfo{
+      AccountType type = 1;
+      string institution = 2;
+      string cardholderName = 3;
+      string cardholderCpf = 4;
+      string agency = 5;
+      string accountNumber = 6;
+    }
+    KeyType type = 1;
+    string key = 2;
+    AccountInfo account = 3;
+    google.protobuf.Timestamp createdAt = 4;
+
+  }
+
+  string pixId = 1;
+  string clientId = 2;
+  PixKey pixKey = 3;
+}
+
 
 message RegisterKeyRequest{
   string idClient = 1;

@@ -4,11 +4,10 @@ import br.com.zup.key.bcb.register.CreatePixKeyBCBRequest
 import br.com.zup.key.bcb.register.CreatePixKeyBCBResponse
 import br.com.zup.key.bcb.remove.DeletePixKeyRequest
 import br.com.zup.key.bcb.remove.DeletePixKeyResponse
+import br.com.zup.key.bcb.detail.DetailPixKeyBCBResponse
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.MediaType
-import io.micronaut.http.annotation.Body
-import io.micronaut.http.annotation.Delete
-import io.micronaut.http.annotation.Post
+import io.micronaut.http.annotation.*
 import io.micronaut.http.client.annotation.Client
 
 
@@ -29,4 +28,11 @@ interface CentralBankPixSystemClient {
         consumes = [MediaType.APPLICATION_XML]
     )
     fun deletePixKey(@Body request: DeletePixKeyRequest): HttpResponse<DeletePixKeyResponse>
+
+    @Get(
+        "/api/v1/pix/keys/{key}",
+        processes = [MediaType.APPLICATION_XML],
+        consumes = [MediaType.APPLICATION_XML]
+    )
+    fun detailPixKey(@PathVariable key: String): HttpResponse<DetailPixKeyBCBResponse>
 }

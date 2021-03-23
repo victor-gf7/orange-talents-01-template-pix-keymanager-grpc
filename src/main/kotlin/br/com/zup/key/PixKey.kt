@@ -1,6 +1,7 @@
 package br.com.zup.key
 
 import java.time.LocalDateTime
+import java.util.*
 import javax.persistence.*
 import javax.validation.Valid
 import javax.validation.constraints.NotBlank
@@ -42,4 +43,10 @@ class PixKey(
     fun update(key: String) {
         this.keyValue = key
     }
+
+    fun belongsTo(clientId: UUID?): Boolean {
+        return UUID.fromString(this.idClient) == clientId
+    }
+
+
 }
