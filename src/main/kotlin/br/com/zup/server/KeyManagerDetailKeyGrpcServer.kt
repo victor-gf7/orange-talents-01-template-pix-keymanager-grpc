@@ -1,20 +1,17 @@
 package br.com.zup.server
 
-import br.com.zup.*
+import br.com.zup.KeyDetailRequest
+import br.com.zup.KeyDetailResponse
+import br.com.zup.KeyManagerDetailGRPCServiceGrpc
 import br.com.zup.key.client.CentralBankPixSystemClient
 import br.com.zup.key.detail.ConverterToResponseDetailGRPC
 import br.com.zup.key.detail.Filter
 import br.com.zup.key.detail.PixKeyInfo
 import br.com.zup.key.register.PixKeyRepository
 import br.com.zup.validation.handler.ErrorHandler
-import com.google.protobuf.Timestamp
 import io.grpc.stub.StreamObserver
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import java.time.Instant
-import java.time.LocalDateTime
-import java.time.ZoneId
-import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
 import javax.validation.ConstraintViolationException

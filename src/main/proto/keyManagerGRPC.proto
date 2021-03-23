@@ -20,6 +20,10 @@ service KeyManagerDetailGRPCService {
   rpc detailKey (KeyDetailRequest) returns (KeyDetailResponse) {}
 }
 
+service KeyManagerListGRPCService {
+  rpc listKeys (ListKeysRequest) returns (ListKeysResponse) {}
+}
+
 enum KeyType{
   UNKNOWN_KEY = 0;
   CPF = 1;
@@ -32,6 +36,22 @@ enum AccountType{
   UNKNOWN_ACCOUNT = 0;
   CONTA_CORRENTE = 1;
   CONTA_POUPANCA = 2;
+}
+
+message ListKeysRequest{
+  string clientId = 1;
+}
+
+message ListKeysResponse{
+  message PixKey{
+    string pixId = 1;
+    KeyType keyType = 2;
+    string key = 3;
+    AccountType accountType = 4;
+    google.protobuf.Timestamp createdAt = 5;
+  }
+  string clientId= 1;
+  repeated PixKey keys = 2;
 }
 
 message KeyDetailRequest{

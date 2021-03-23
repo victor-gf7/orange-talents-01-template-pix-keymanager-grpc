@@ -2,7 +2,6 @@ package br.com.zup.key.bcb.detail
 
 import br.com.zup.key.Account
 import br.com.zup.key.AccountType
-import br.com.zup.key.Institutions
 import br.com.zup.key.bcb.AccountTypeBCB
 import br.com.zup.key.bcb.KeyTypeBCB
 import br.com.zup.key.bcb.register.BankAccountResponse
@@ -10,7 +9,6 @@ import br.com.zup.key.bcb.register.OwnerResponse
 import br.com.zup.key.detail.PixKeyInfo
 import io.micronaut.core.annotation.Introspected
 import java.time.LocalDateTime
-import java.util.*
 
 @Introspected
 data class DetailPixKeyBCBResponse(
