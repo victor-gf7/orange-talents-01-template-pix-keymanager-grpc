@@ -1,9 +1,6 @@
 package br.com.zup.server
 
-import br.com.zup.KeyManagerListGRPCServiceGrpc
-import br.com.zup.KeyType
-import br.com.zup.ListKeysRequest
-import br.com.zup.ListKeysResponse
+import br.com.zup.*
 import br.com.zup.key.register.PixKeyRepository
 import br.com.zup.validation.handler.ErrorHandler
 import com.google.protobuf.Timestamp
@@ -36,6 +33,7 @@ class KeyManagerListKeysGrpcServer(
                 .setPixId(it.id.toString())
                 .setKeyType(KeyType.valueOf(it.keyType.name))
                 .setKey(it.keyValue)
+                .setAccountType(AccountType.valueOf(it.accountType.name))
                 .setCreatedAt(
                     it.createdIn.let {
                         val createdAt = it.atZone(ZoneId.of("UTC")).toInstant()
