@@ -4,10 +4,16 @@ services:
     image: "public.ecr.aws/d8b2x5c9/orange-stack-sat-bcb-pix"
     ports:
       - 8082:8082
+    networks:
+      - keymamagernetwork
+
   erp-itau:
     image: "public.ecr.aws/d8b2x5c9/orange-stack-sat-itau-erp"
     ports:
       - 9091:9091
+    networks:
+      - keymamagernetwork
+
   keymanagergrpc:
     build:
       dockerfile: ./Dockerfile
@@ -28,6 +34,22 @@ services:
       DATABASE_PASSWORD: 123456
       ITAU_ACCOUNT_URL: http://erp-itau:9091
       BCB_URL: http://bcb:8082
+    networks:
+      - keymamagernetwork
+
+  keymanagerrest:
+    build:
+      dockerfile: ./Dockerfile
+      context: ../orange-talents-01-template-pix-keymanager-rest
+    image: "ferreirazaltan/keymanagerrest"
+    container_name: keymanagerrest_1
+    ports:
+      - 8080:8080
+    environment:
+      KEYMANAGER_ADDRESS: keymanagergrpc:50051
+    networks:
+      - keymamagernetwork
+
   keymanagerdb:
     image: mariadb
     ports:
@@ -36,3 +58,10 @@ services:
       MYSQL_DATABASE: keymanager
       MYSQL_USER: root
       MYSQL_ROOT_PASSWORD: 123456
+    networks:
+      - keymamagernetwork
+
+
+networks:
+  keymamagernetwork:
+    driver: bridge
