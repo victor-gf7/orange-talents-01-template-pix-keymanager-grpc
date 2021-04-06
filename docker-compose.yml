@@ -8,3 +8,31 @@ services:
     image: "public.ecr.aws/d8b2x5c9/orange-stack-sat-itau-erp"
     ports:
       - 9091:9091
+  keymanagergrpc:
+    build:
+      dockerfile: ./Dockerfile
+      context: .
+    image: "ferreirazaltan/keymanagergrpc"
+    container_name: keymanagergrpc_1
+    ports:
+      - 50051:50051
+    depends_on:
+      - bcb
+      - erp-itau
+      - keymanagerdb
+    environment:
+      DATABASE_HOST: keymanagerdb
+      DATABASE_PORT: 3306
+      DATABASE_NAME: keymanager
+      DATABASE_USERNAME: root
+      DATABASE_PASSWORD: 123456
+      ITAU_ACCOUNT_URL: http://erp-itau:9091
+      BCB_URL: http://bcb:8082
+  keymanagerdb:
+    image: mariadb
+    ports:
+      - 23306:3306
+    environment:
+      MYSQL_DATABASE: keymanager
+      MYSQL_USER: root
+      MYSQL_ROOT_PASSWORD: 123456

@@ -4,14 +4,14 @@ micronaut:
 
 datasources:
   default:
-    url: jdbc:mariadb://localhost:3306/keymanager
+    url: jdbc:mariadb://${DATABASE_HOST:localhost}:${DATABASE_PORT:23306}/${DATABASE_NAME:keymanager}
     driverClassName: org.mariadb.jdbc.Driver
-    username: root
-    password: 123456
+    username: ${DATABASE_USERNAME:root}
+    password: ${DATABASE_PASSWORD:123456}
     dialect: MARIADB
 jpa.default.properties.hibernate.hbm2ddl.auto: update
 jpa.default.properties.hibernate.show_sql: true
 jpa.default.properties.hibernate.format_sql: true
 
-itau.account.url: 'http://localhost:9091'
-bcb.pix.url: 'http://localhost:8082'
+itau.account.url: ${ITAU_ACCOUNT_URL:http://localhost:9091}
+bcb.pix.url: ${BCB_URL:http://localhost:8082}
